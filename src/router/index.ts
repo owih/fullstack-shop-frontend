@@ -1,26 +1,42 @@
 // Composables
 import { createRouter, createWebHistory } from 'vue-router';
+import ProfilePage from '@/views/ProfilePage.vue';
+import AuthPage from '@/views/AuthPage.vue';
+import InfoPage from '@/views/InfoPage.vue';
+import CatalogDetailPage from '@/views/CatalogDetailPage.vue';
+import CatalogPage from '@/views/CatalogPage.vue';
+import Home from '@/views/Home.vue';
 
 const routes = [
   {
-    path: '/',
-    children: [
-      {
-        path: '',
-        name: 'Home',
-        component: () => import('@/views/Home.vue'),
-      },
-    ],
+    path: '',
+    name: 'Home',
+    component: Home,
   },
   {
-    path: '/',
-    children: [
-      {
-        path: '/catalog',
-        name: 'Catalog',
-        component: () => import('@/views/CatalogPage.vue'),
-      },
-    ],
+    path: '/catalog',
+    name: 'Catalog',
+    component: CatalogPage,
+  },
+  {
+    path: '/catalog/:id',
+    name: 'CatalogDetail',
+    component: CatalogDetailPage,
+  },
+  {
+    path: '/info',
+    name: 'Info',
+    component: InfoPage,
+  },
+  {
+    path: '/auth',
+    name: 'Auth',
+    component: AuthPage,
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: ProfilePage,
   },
 ];
 

@@ -1,2 +1,19 @@
 // disabled permanent scroll shown behavior
-html { overflow: auto !important; }
+html {
+  overflow: auto !important;
+  box-sizing: border-box;
+}
+
+/* Scroll settings */
+/* width */
+::-webkit-scrollbar {
+  width: 2px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: gray;
+}

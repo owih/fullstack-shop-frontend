@@ -14,7 +14,7 @@
         height="100%"
       >
         <div class="d-flex fill-height justify-center align-center">
-          <div class="text-h2">
+          <div class="text-h6 text-md-h2">
             {{ slide }} Slide
           </div>
         </div>
