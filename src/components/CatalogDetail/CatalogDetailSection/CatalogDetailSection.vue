@@ -3,13 +3,21 @@
     variant="text"
     class="w-100"
   >
-    <v-row class="align-center">
-      <v-col>
+    <v-row class="align-center justify-center">
+      <v-col
+        cols="12"
+        sm="10"
+        md="6"
+      >
         <catalog-detail-carousel :slides="product.images" />
       </v-col>
-      <v-col class="h-100 d-flex flex-column justify-space-between">
+      <v-col
+        cols="12"
+        md="6"
+        class="h-100 d-flex flex-column justify-space-between"
+      >
         <div class="pb-3">
-          <div class="text-h3 mb-3">
+          <div class="text-h5 text-lg-h3 mb-3">
             {{ product.name }}
           </div>
           <div class="mb-3 text-grey">

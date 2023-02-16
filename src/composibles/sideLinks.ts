@@ -32,13 +32,13 @@ export default [
     icon: 'mdi-cart',
     title: 'Cart',
     value: 'cart',
-    modal: '/cart',
+    modal: 'cart',
   },
   {
     id: 5,
     icon: 'mdi-heart',
     title: 'Favorites',
     value: 'favorites',
-    modal: '/favorites',
+    modal: 'favorites',
   },
 ];

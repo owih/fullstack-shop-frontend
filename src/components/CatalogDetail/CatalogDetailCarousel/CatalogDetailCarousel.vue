@@ -1,6 +1,6 @@
 <template>
   <v-carousel
-    height="400"
+    :height="getCarouselHeight()"
     cycle
     interval="6000"
     class="rounded"
@@ -34,6 +34,10 @@ const props = defineProps({
     required: true,
   }
 });
+
+const getCarouselHeight = () => {
+  return window.matchMedia('(min-width:1200px)').matches ? 600 : 400;
+};
 </script>
 
 <style scoped>
