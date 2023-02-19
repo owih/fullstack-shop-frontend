@@ -6,6 +6,7 @@
     </v-main>
     <footer-layout />
   </v-app>
+  <custom-notify />
   <menu-sidebar />
 </template>
 
@@ -13,6 +14,7 @@
 import HeaderLayout from '@/components/HeaderLayout/HeaderLayout.vue';
 import MenuSidebar from '@/components/Sidebar/MenuSidebar.vue';
 import FooterLayout from '@/components/FooterLayout/FooterLayout.vue';
+import CustomNotify from '@/components/CustomNotify/CustomNotify.vue';
 </script>
 
 <style lang="scss" scoped>

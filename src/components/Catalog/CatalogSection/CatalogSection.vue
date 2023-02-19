@@ -1,64 +1,47 @@
 <template>
-  <CatalogList :list="catalogListMock" />
-  <div class="text-center mt-12">
-    <v-pagination
-      :length="6"
+  <div
+    v-if="productStore.getPending"
+    class="w-100 h-100 position-relative"
+  >
+    <custom-loader
+      :width="6"
+      :size="72"
     />
+  </div>
+  <template v-if="!productStore.getPending && productStore.getProducts.length">
+    <CatalogList :list="productStore.getProducts" />
+    <div class="text-center mt-12">
+      <v-pagination
+        v-if="productStore.getCount > MAX_PRODUCT_COUNT"
+        v-model="currentPage"
+        :length="Math.ceil(productStore.getCount / MAX_PRODUCT_COUNT)"
+        @update:modelValue="updateProducts"
+      />
+    </div>
+  </template>
+  <div v-if="!productStore.getPending && !productStore.getProducts.length">
+    Sorry there is no products right now :(
   </div>
 </template>
 
 <script setup lang='ts'>
 import CatalogList from '@/components/Catalog/CatalogList/CatalogList.vue';
-import Products from '@/types/products';
-const catalogListMock: Products = [
-  {
-    id: Math.floor(Math.random() * 10),
-    name: 'T-shirt',
-    price: 333,
-    description: 'Some text description',
-    type: 'T-shirt',
-    sale: 30,
-    stock: 33,
-    sizes: ['s', 'm', 'l', 'xl', '2xl', '3xl', '4xl'],
-  },
-  {
-    id: Math.floor(Math.random() * 10),
-    name: 'T-shirt',
-    price: 112,
-    description: 'Some text description Some text description Some text description Some text description',
-    type: 'T-shirt',
-    stock: 33,
-    sizes: ['s', 'm', 'l', 'xl', '2xl', '3xl', '4xl'],
-  },
-  {
-    id: Math.floor(Math.random() * 10),
-    name: 'T-shirt',
-    price: 144,
-    description: 'Some text description',
-    type: 'T-shirt',
-    sale: 15,
-    stock: 33,
-    sizes: ['s', 'm', 'l', 'xl', '2xl', '3xl', '4xl'],
-  },
-  {
-    id: Math.floor(Math.random() * 10),
-    name: 'T-shirt',
-    price: 230,
-    description: 'Some text description',
-    type: 'T-shirt',
-    stock: 33,
-    sizes: ['s', 'm', 'l', 'xl', '2xl', '3xl', '4xl'],
-  },
-  {
-    id: Math.floor(Math.random() * 10),
-    name: 'T-shirt',
-    price: 150,
-    description: 'Some text description',
-    type: 'T-shirt',
-    stock: 33,
-    sizes: ['s', 'm', 'l', 'xl', '2xl', '3xl', '4xl'],
-  },
-];
+import { useProductsStore } from '@/store/useProductsStore';
+import { onMounted, ref } from 'vue';
+import CustomLoader from '@/components/CustomLoader/CustomLoader.vue';
+
+const productStore = useProductsStore();
+const MAX_PRODUCT_COUNT = 8;
+const updateProducts = (page: number):void => {
+  console.log(page);
+  productStore.getProductsFromApiToStore(page, 8);
+};
+
+const currentPage = ref(1);
+
+onMounted(() => {
+  updateProducts(currentPage.value);
+});
 </script>
 
 <style scoped>

@@ -1,11 +1,25 @@
 <template>
   <v-card class="h-100 d-flex flex-column">
     <v-img
+      v-if="props.product.image.length"
       class="align-end text-white"
       height="300"
-      src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+      :src="baseUrl + props.product.image[0].url"
+      :alt="baseUrl + props.product.image[0].name"
       cover
     />
+    <div
+      v-else
+      class="image-mock"
+    >
+      <v-icon
+        icon="mdi-image"
+        size="x-large"
+      />
+      <span class="pl-3 text-h6 font-weight-regular">
+        No image
+      </span>
+    </div>
     <div
       v-if="props.product.sale"
       class="sale rounded-sm bg-deep-orange-accent-3 text-shades-white font-weight-bold"
@@ -54,9 +68,16 @@
       </v-col>
     </v-row>
     <v-card-subtitle>
-      {{ props.product.type }}
-      |
-      {{ `stock: ${props.product.stock}` }}
+      <div class="d-flex m1-n2">
+        <span
+          v-for="item in props.product.type"
+          :key="item.id"
+          class="p1-2"
+        >
+          {{ item.type.name }}
+        </span>
+      </div>
+      {{ `Stock: ${props.product.stock}` }}
     </v-card-subtitle>
 
     <v-card-text>
@@ -89,12 +110,20 @@ const props = defineProps({
     required: true,
   }
 });
+const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
 const onClickLike = ():void => {
   console.log('like');
 };
 </script>
 
 <style scoped lang="scss">
+.image-mock {
+  height: 300px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .sale {
   position: absolute;
   top: 16px;

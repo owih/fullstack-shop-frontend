@@ -27,7 +27,7 @@
       nav
     >
       <template
-        v-for="item in sideLinks"
+        v-for="item in useSideLinks"
         :key="item.id"
       >
         <v-list-item
@@ -51,7 +51,7 @@
 
 <script setup lang='ts'>
 import { useDialogsStore } from '@/store/useDialogsStore';
-import sideLinks from '@/composibles/sideLinks';
+import useSideLinks from '@/composibles/useSideLinks';
 
 const dialogsStore = useDialogsStore();
 const onClickClose = ():void => {

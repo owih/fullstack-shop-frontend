@@ -16,9 +16,9 @@
 </template>
 
 <script setup lang='ts'>
-import Products from '@/types/products';
+import Product from '@/types/product';
 import FavoritesList from '@/components/Favorites/FavoritesList/FavoritesList.vue';
-const favoritesListMock: Products = [
+const favoritesListMock: Product[] = [
   {
     id: (Math.random() * 10),
     name: 'T-shirt',

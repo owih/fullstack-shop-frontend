@@ -16,10 +16,10 @@
 </template>
 
 <script setup lang='ts'>
-import Products from '@/types/products';
+import Product from '@/types/product';
 import CartList from '@/components/Cart/CartList/CartList.vue';
 
-const catalogListMock: Products = [
+const catalogListMock: Product[] = [
   {
     id: (Math.random() * 10),
     name: 'T-shirt',

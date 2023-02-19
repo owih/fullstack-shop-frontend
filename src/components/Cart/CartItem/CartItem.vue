@@ -41,11 +41,6 @@
           </div>
         </v-card-text>
         <v-card-actions class="pa-0 d-flex justify-space-between">
-          <custom-picker
-            :productSizes="props.product.sizes"
-            @update:modelValue="onUpdateSize"
-          />
-          <custom-counter v-model="counter" />
         </v-card-actions>
       </v-col>
     </v-row>
@@ -53,11 +48,8 @@
 </template>
 
 <script setup lang='ts'>
-import { PropType, ref } from 'vue';
+import { PropType } from 'vue';
 import Product from '@/types/product';
-import ProductSize from '@/types/productSize';
-import CustomCounter from '@/components/CustomCounter/CustomCounter.vue';
-import CustomPicker from '@/components/CustomPicker/CustomPicker.vue';
 
 const props = defineProps({
   product: {
@@ -65,10 +57,6 @@ const props = defineProps({
     required: true,
   }
 });
-const counter = ref<Number>(1);
-const onUpdateSize = (size:ProductSize):void => {
-  console.log(size);
-};
 </script>
 
 <style scoped>

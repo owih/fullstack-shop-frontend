@@ -16,11 +16,11 @@
 <script setup lang='ts'>
 import { PropType } from 'vue';
 import CatalogItem from '@/components/Catalog/CatalogItem/CatalogItem.vue';
-import Products from '@/types/products';
+import Product from '@/types/product';
 
 const props = defineProps({
   list: {
-    type: Array as PropType<Products>,
+    type: Array as PropType<Product[]>,
     required: true,
   }
 });

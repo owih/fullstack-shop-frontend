@@ -27,27 +27,22 @@
 </template>
 
 <script setup lang='ts'>
-import { PropType, ref } from 'vue';
-import ProductSizes from '@/types/productSizes';
-import ProductSize from '@/types/productSize';
-import productSizes from '@/composibles/productSizes';
-
 const props = defineProps({
   productSizes: {
-    type: Array as PropType<ProductSizes>,
+    type: Array,
     required: true,
   },
 });
-const emits = defineEmits<{(e: 'update:modelValue', value: ProductSize): void}>();
-const size = ref<string>();
-const id:number = Math.floor(Math.random() * 10000);
-const onClickSize = (e:Event):void => {
-  const target = e.target as HTMLDivElement;
-  const text = target.textContent as ProductSize;
-  if (!target || !text || !productSizes.includes(text)) return;
-  size.value = text;
-  emits('update:modelValue', text);
-};
+// const emits = defineEmits<{(e: 'update:modelValue', value: ProductSize): void}>();
+// const size = ref<string>();
+// const id:number = Math.floor(Math.random() * 10000);
+// const onClickSize = (e:Event):void => {
+//   const target = e.target as HTMLDivElement;
+//   const text = target.textContent as ProductSize;
+//   if (!target || !text || !productSizes.includes(text)) return;
+//   size.value = text;
+//   emits('update:modelValue', text);
+// };
 </script>
 
 <style scoped>

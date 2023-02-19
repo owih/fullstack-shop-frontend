@@ -37,7 +37,7 @@
       class="mb-2"
       variant="outlined"
       :rules="[rules.required]"
-      :items="countriesList"
+      :items="useCountriesList"
       label="Country"
       placeholder="Select..."
       required
@@ -54,7 +54,7 @@
 </template>
 
 <script setup lang='ts'>
-import countriesList from '@/composibles/countriesList';
+import useCountriesList from '@/composibles/useCountriesList';
 import { reactive, ref } from 'vue';
 
 const form = ref();

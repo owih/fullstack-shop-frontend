@@ -16,7 +16,7 @@
         <div class="d-flex fill-height justify-center align-center">
           <v-img
             class="h-100"
-            :src="slide"
+            :src="baseBackendUrl + slide.url"
             cover
           />
         </div>
@@ -34,6 +34,8 @@ const props = defineProps({
     required: true,
   }
 });
+
+const baseBackendUrl: string = import.meta.env.VITE_BACKEND_BASE_URL;
 
 const getCarouselHeight = () => {
   return window.matchMedia('(min-width:1200px)').matches ? 600 : 400;

@@ -1,5 +1,3 @@
-import ProductSizes from '@/types/productSizes';
-
 type Product = {
   id: number,
   name: string,
@@ -8,8 +6,7 @@ type Product = {
   sale?: number,
   description?: string,
   stock: number,
-  sizes: ProductSizes,
-  images?: string[],
+  image?: string[],
 }
 
 export default Product;
