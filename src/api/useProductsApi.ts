@@ -1,17 +1,18 @@
-import axios from 'axios';
 import useUrlBackendPaths from '@/composibles/useUrlBackendPaths';
+import Api from '@/api/api';
 
-const baseBackendUrl = import.meta.env.VITE_BACKEND_URL;
 const urlProductPath = useUrlBackendPaths.product;
 
-console.log(baseBackendUrl + urlProductPath);
 export const getProductsFromApi = (page?: number, limit?: number) => {
   if (page && limit) {
-    return axios.get(`${baseBackendUrl}${urlProductPath}/?page=${page}&limit=${limit}`);
+    const path = `${urlProductPath}/?page=${page}&limit=${limit}`;
+    return Api.request('get', path);
   }
-  return axios.get(`${baseBackendUrl}${urlProductPath}/`);
+  const path = `${urlProductPath}/`;
+  return Api.request('get', path);
 };
 
 export const getProductFromApi = (id: number) => {
-  return axios.get(`${baseBackendUrl}${urlProductPath}/${String(id)}`);
+  const path = `${urlProductPath}/${String(id)}`;
+  return Api.request('get', path);
 };

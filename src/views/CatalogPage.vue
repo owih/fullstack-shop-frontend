@@ -1,5 +1,8 @@
 <template>
   <v-container class="h-100">
+    <h1>
+      Catalog
+    </h1>
     <CatalogSection />
   </v-container>
 </template>

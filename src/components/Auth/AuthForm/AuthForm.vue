@@ -21,6 +21,7 @@
       clearable
       label="Password"
       placeholder="Enter your password"
+      type="password"
     />
 
     <br>

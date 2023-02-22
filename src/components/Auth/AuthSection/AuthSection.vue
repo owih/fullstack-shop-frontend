@@ -36,19 +36,24 @@
 <script setup lang='ts'>
 import AuthForm from '@/components/Auth/AuthForm/AuthForm.vue';
 import AuthFormType from '@/types/authFormType';
-import { ref } from 'vue';
 import RegistrationForm from '@/components/Auth/RegistrationForm/RegistrationForm.vue';
 import RegistrationFormType from '@/types/registrationFormType';
+import { ref } from 'vue';
+import { useUserStore } from '@/store/useUserStore';
 
+const userStore = useUserStore();
 const isCurrentFormAuth = ref<boolean>(true);
+
 const onSwitchAuthType = (isNewFormAuth:boolean):void => {
   isCurrentFormAuth.value = isNewFormAuth;
 };
+
 const onRegistration = (formData:RegistrationFormType):void => {
   console.log(formData);
 };
+
 const onAuth = (formData:AuthFormType):void => {
-  console.log(formData);
+  userStore.login(formData);
 };
 </script>
 

@@ -1,4 +1,3 @@
-// Composables
 import { createRouter, createWebHistory } from 'vue-router';
 import ProfilePage from '@/views/ProfilePage.vue';
 import AuthPage from '@/views/AuthPage.vue';
