@@ -1,3 +1,5 @@
+import SideLink from '@/types/sideLink';
+
 export default [
   {
     id: 0,
@@ -41,4 +43,4 @@ export default [
     value: 'favorites',
     modal: 'favorites',
   },
-];
+] as SideLink[];

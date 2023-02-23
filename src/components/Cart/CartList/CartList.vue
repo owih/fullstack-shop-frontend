@@ -5,7 +5,7 @@
       :key="item.id"
       class="pa-3"
     >
-      <CartItem :product="item" />
+      <cart-item :product="item" />
     </v-col>
   </v-row>
 </template>

@@ -1,7 +1,8 @@
 <template>
   <v-dialog
-    v-model="dialogsStore.getDialogsIsOpenStates.favorites"
+    v-model="dialogsStore.dialogsIsOpenState.favorites"
     width="768"
+    min-height="400"
   >
     <v-card class="pa-2 pa-lg-6 overflow-hidden">
       <v-btn

@@ -2,24 +2,15 @@
   <v-card class="h-100 d-flex flex-column">
     <v-img
       v-if="props.product.image.length"
-      class="align-end text-white"
       height="300"
       :src="baseUrl + props.product.image[0].url"
       :alt="baseUrl + props.product.image[0].name"
       cover
     />
-    <div
+    <custom-image-mock
       v-else
-      class="image-mock"
-    >
-      <v-icon
-        icon="mdi-image"
-        size="x-large"
-      />
-      <span class="pl-3 text-h6 font-weight-regular">
-        No image
-      </span>
-    </div>
+      :height="300"
+    />
     <div
       v-if="props.product.sale"
       class="sale rounded-sm bg-deep-orange-accent-3 text-shades-white font-weight-bold"
@@ -39,7 +30,7 @@
         <v-card-title>
           <router-link
             :to="`/catalog/${props.product.id}`"
-            class="px-0 text-decoration-none"
+            class="px-0 text-decoration-none text-primary"
           >
             {{ props.product.name }}
           </router-link>
@@ -74,7 +65,7 @@
           :key="item.id"
           class="p1-2"
         >
-          {{ item.type.name }}
+          {{ item.name }}
         </span>
       </div>
       {{ `Stock: ${props.product.stock}` }}
@@ -93,6 +84,8 @@
 
       <v-btn
         append-icon="mdi-cart-plus"
+        :loading="cartStore.getPending.add"
+        @click="onClickAdd"
       >
         Add
       </v-btn>
@@ -103,6 +96,18 @@
 <script setup lang='ts'>
 import { PropType } from 'vue';
 import Product from '@/types/product';
+import CustomImageMock from '@/components/CustomImageMock/CustomImageMock.vue';
+import { useCartStore } from '@/store/useCartStore';
+import { useUserStore } from '@/store/useUserStore';
+import { useFavoritesStore } from '@/store/useFavoritesStore';
+import { useRouter } from 'vue-router';
+import { useCustomNotifyStore } from '@/store/useCustomNotifyStore';
+
+const cartStore = useCartStore();
+const userStore = useUserStore();
+const favoritesStore = useFavoritesStore();
+const router = useRouter();
+const notifyStore = useCustomNotifyStore();
 
 const props = defineProps({
   product: {
@@ -111,19 +116,26 @@ const props = defineProps({
   }
 });
 const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
+
+const onClickAdd = () => {
+  if (userStore.getIsUserAuth) {
+    cartStore.addProductToCart(props.product.id);
+    return;
+  }
+  router.push({ name: 'Auth' });
+  notifyStore.addNotify('You need to be Authorized', 'Error');
+};
 const onClickLike = ():void => {
-  console.log('like');
+  if (userStore.getIsUserAuth) {
+    console.log('add');
+    return;
+  }
+  router.push({ name: 'Auth' });
+  notifyStore.addNotify('You need to be Authorized', 'Error');
 };
 </script>
 
 <style scoped lang="scss">
-.image-mock {
-  height: 300px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 .sale {
   position: absolute;
   top: 16px;

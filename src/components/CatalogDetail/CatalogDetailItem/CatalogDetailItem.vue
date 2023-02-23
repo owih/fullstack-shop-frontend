@@ -10,21 +10,22 @@
         md="6"
       >
         <catalog-detail-carousel
-          v-if="props.product.image.length"
+          v-if="props.product.image.length && props.product.image.length > 1"
           :slides="props.product.image"
         />
-        <div
+        <v-img
           v-else
-          class="image-mock"
-        >
-          <v-icon
-            icon="mdi-image"
-            size="x-large"
-          />
-          <span class="pl-3 text-h6 font-weight-regular">
-            No image
-          </span>
-        </div>
+          :width="300"
+          :src="baseBackendUrl + props.product.image[0].url"
+          :alt="props.product.image[0].name"
+          aspect-ratio="1/1"
+          cover
+          class="mx-auto h-100"
+        />
+        <custom-image-mock
+          v-if="!props.product.image.length"
+          :height="300"
+        />
       </v-col>
       <v-col
         cols="12"
@@ -73,6 +74,7 @@
               variant="elevated"
               class="text-shades-white"
               size="large"
+              @click="onClickLike"
             >
               <v-icon icon="mdi-heart" />
             </v-btn>
@@ -82,6 +84,7 @@
               color="primary"
               class="text-shades-white px-6"
               size="large"
+              @click="onClickAdd"
             >
               Add
             </v-btn>
@@ -96,6 +99,12 @@
 import CatalogDetailCarousel from '@/components/CatalogDetail/CatalogDetailCarousel/CatalogDetailCarousel.vue';
 import { PropType } from 'vue';
 import Product from '@/types/product';
+import { useCartStore } from '@/store/useCartStore';
+import { useUserStore } from '@/store/useUserStore';
+import { useFavoritesStore } from '@/store/useFavoritesStore';
+import { useRouter } from 'vue-router';
+import { useCustomNotifyStore } from '@/store/useCustomNotifyStore';
+import CustomImageMock from '@/components/CustomImageMock/CustomImageMock.vue';
 
 const props = defineProps({
   product: {
@@ -103,14 +112,29 @@ const props = defineProps({
     required: true,
   }
 });
-</script>
 
-<style scoped lang="scss">
-.image-mock {
-  height: 300px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-</style>
+const cartStore = useCartStore();
+const userStore = useUserStore();
+const favoritesStore = useFavoritesStore();
+const router = useRouter();
+const notifyStore = useCustomNotifyStore();
+
+const baseBackendUrl: string = import.meta.env.VITE_BACKEND_BASE_URL;
+
+const onClickAdd = () => {
+  if (userStore.getIsUserAuth) {
+    console.log('add');
+    return;
+  }
+  router.push({ name: 'Auth' });
+  notifyStore.addNotify('You need to be Authorized', 'Error');
+};
+const onClickLike = ():void => {
+  if (userStore.getIsUserAuth) {
+    console.log('add');
+    return;
+  }
+  router.push({ name: 'Auth' });
+  notifyStore.addNotify('You need to be Authorized', 'Error');
+};
+</script>

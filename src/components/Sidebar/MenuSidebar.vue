@@ -42,7 +42,7 @@
           :prepend-icon="item.icon"
           :title="item.title"
           :value="item.value"
-          @click="onClickModalLink"
+          @click="onClickModalLink(item.modal)"
         />
       </template>
     </v-list>
@@ -51,15 +51,27 @@
 
 <script setup lang='ts'>
 import { useDialogsStore } from '@/store/useDialogsStore';
+import { useUserStore } from '@/store/useUserStore';
+import { useRouter } from 'vue-router';
 import useSideLinks from '@/composibles/useSideLinks';
+import DialogType from '@/types/dialogType';
+import { useCustomNotifyStore } from '@/store/useCustomNotifyStore';
 
+const userStore = useUserStore();
 const dialogsStore = useDialogsStore();
+const notifyStore = useCustomNotifyStore();
+const router = useRouter();
 const onClickClose = ():void => {
   dialogsStore.toggleModal('menu');
 };
-const onClickModalLink = ():void => {
-  dialogsStore.toggleModal('menu');
-  dialogsStore.toggleModal('favorites');
+const onClickModalLink = (modal: DialogType):void => {
+  if (userStore.getIsUserAuth) {
+    dialogsStore.toggleModal('menu', false);
+    dialogsStore.toggleModal(modal, true);
+    return;
+  }
+  router.push({ name: 'Auth' });
+  notifyStore.addNotify('You need to be Authorized', 'Error');
 };
 </script>
 

@@ -7,7 +7,7 @@
       transition="fade-transition"
       position="static"
       location="bottom left"
-      :timeout="2000"
+      :timeout="4000"
       location-strategy="connected"
       class="py-3"
       @update:modelValue="customNotifyStore.removeNotify(item.value.id)"

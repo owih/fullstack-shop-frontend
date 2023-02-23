@@ -3,16 +3,16 @@
     <v-btn
       variant="text"
       icon="mdi-minus"
-      @click="onUpdate(props.modelValue - 1)"
+      @click="onUpdate(props.value - 1)"
     />
     <div class="w-25">
-      {{ props.modelValue }}
+      {{ props.value }}
     </div>
     <v-btn
       variant="text"
       icon="mdi-plus"
       class="ma-0"
-      @click="onUpdate(props.modelValue + 1)"
+      @click="onUpdate(props.value + 1)"
     />
   </div>
 </template>
@@ -21,16 +21,16 @@
 import { PropType } from 'vue';
 
 const props = defineProps({
-  modelValue: {
+  value: {
     type: Number as PropType<number>,
     required: false,
     default: 0
   }
 });
-const emits = defineEmits<{(e: 'update:modelValue', value: number):void}>();
+const emits = defineEmits<{(e: 'update', value: number):void}>();
 const onUpdate = (newCounterValue:number):void => {
   console.log(newCounterValue);
-  emits('update:modelValue', newCounterValue);
+  emits('update', newCounterValue);
 };
 </script>
 

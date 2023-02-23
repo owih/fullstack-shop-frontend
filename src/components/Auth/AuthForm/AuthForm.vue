@@ -28,7 +28,7 @@
 
     <v-btn
       :disabled="!form"
-      :loading="loading"
+      :loading="props.pending"
       block
       color="success"
       size="large"
@@ -41,9 +41,15 @@
 </template>
 
 <script setup lang='ts'>
-import { reactive, ref } from 'vue';
+import { PropType, reactive, ref } from 'vue';
 import AuthFormType from '@/types/authFormType';
 
+const props = defineProps({
+  pending: {
+    type: Boolean as PropType<boolean>,
+    required: true,
+  }
+});
 const emits = defineEmits<{(e: 'auth', value: AuthFormType):void}>();
 
 const form = ref<boolean>(false);

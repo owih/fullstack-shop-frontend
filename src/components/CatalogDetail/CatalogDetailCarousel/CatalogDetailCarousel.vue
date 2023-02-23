@@ -17,6 +17,7 @@
           <v-img
             class="h-100"
             :src="baseBackendUrl + slide.url"
+            :alt="baseBackendUrl + slide.name"
             cover
           />
         </div>
@@ -27,10 +28,11 @@
 
 <script setup lang='ts'>
 import { PropType } from 'vue';
+import ProductImage from '@/types/productImage';
 
 const props = defineProps({
   slides: {
-    type: Array as PropType<string[]>,
+    type: Array as PropType<ProductImage[]>,
     required: true,
   }
 });

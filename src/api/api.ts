@@ -34,6 +34,10 @@ class Api {
     localStorage.setItem('token', token);
     console.log(token);
   };
+
+  removeToken = () => {
+    localStorage.removeItem('token');
+  };
 }
 
 export default new Api();

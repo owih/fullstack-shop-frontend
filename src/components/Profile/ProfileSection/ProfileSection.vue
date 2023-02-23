@@ -1,76 +1,46 @@
 <template>
-  <v-form
-    v-model="form"
-    class="w-100"
-    @submit.prevent="onSubmit"
+  <div
+    v-if="userStore.getPending.info"
+    class="w-100 h-100 position-relative"
   >
-    <v-text-field
-      v-model="formData.name"
-      class="mb-2"
-      variant="outlined"
-      :rules="[rules.required]"
-      label="Full Name"
-      placeholder="Dmitry Dmitryevich"
-      required
+    <custom-loader
+      :width="6"
+      :size="92"
     />
-    <v-text-field
-      v-model="formData.address"
-      class="mb-2"
-      variant="outlined"
-      :rules="[rules.address]"
-      label="Address Line"
-      placeholder="Snowy Rock Pl"
-      counter="25"
-      required
-    />
-    <v-text-field
-      v-model="formData.city"
-      class="mb-2"
-      variant="outlined"
-      :rules="[rules.required]"
-      label="City"
-      placeholder="Moscow"
-      required
-    />
-    <v-autocomplete
-      v-model="formData.country"
-      class="mb-2"
-      variant="outlined"
-      :rules="[rules.required]"
-      :items="useCountriesList"
-      label="Country"
-      placeholder="Select..."
-      required
-    />
-    <v-btn
-      color="primary"
-      variant="elevated"
-      type="submit"
-      :disabled="!form"
-    >
-      Update
-    </v-btn>
-  </v-form>
+  </div>
+  <profile-form
+    v-if="!userStore.getPending.info"
+    :userInfo="userStore.getUserInfo"
+    :pending="userStore.getPending.update"
+    @onSubmit="onSubmit"
+    @onLogout="onLogout"
+  />
 </template>
 
 <script setup lang='ts'>
-import useCountriesList from '@/composibles/useCountriesList';
-import { reactive, ref } from 'vue';
+import ProfileForm from '@/components/Profile/ProfileForm/ProfileForm.vue';
+import CustomLoader from '@/components/CustomLoader/CustomLoader.vue';
+import { onMounted } from 'vue';
+import { useUserStore } from '@/store/useUserStore';
+import UserInfo from '@/types/userInfo';
+import { useRouter } from 'vue-router';
 
-const form = ref();
-const formData = reactive({
-  name: '',
-  address: '',
-  country: '',
-  city: '',
-});
-const onSubmit = ():void => {
-  console.log(formData);
+const router = useRouter();
+const userStore = useUserStore();
+
+const onSubmit = (formData: UserInfo):void => {
+  userStore.updateUserInfoFromApiToStore(formData);
 };
-const rules = {
-  required: (value:string) => !!value || 'Required.',
-  address: () => !!formData.address && formData.address.length <= 25 || 'Address must be less than 25 characters',
+const getUserInfo = async () => {
+  await userStore.getUserInfoFromApiToStore();
 };
+
+const onLogout = () => {
+  userStore.logout();
+  router.push({ name: 'Auth' });
+};
+
+onMounted(getUserInfo);
 </script>
 
 <style scoped>

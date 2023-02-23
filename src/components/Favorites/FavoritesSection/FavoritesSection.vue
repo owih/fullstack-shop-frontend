@@ -1,23 +1,29 @@
 <template>
-  <h2 class="pb-3 px-3 px-lg-0 pb-lg-5">
-    Favorites {{ `(${favoritesListMock.length})` }}
-  </h2>
-  <div class="overflow-auto px-3">
-    <favorites-list :products="favoritesListMock" />
-  </div>
-  <div class="d-flex justify-space-between pt-3 pt-lg-5">
-    <v-btn
-      block
-      color="error"
-    >
-      Remove all
-    </v-btn>
-  </div>
+  <v-card
+    variant="text"
+    class="h-100 flex-grow-1 d-flex flex-column"
+  >
+    <h2 class="pb-3 px-3 px-lg-0 pb-lg-5">
+      Favorites {{ `(${favoritesListMock.length})` }}
+    </h2>
+    <div class="overflow-y-auto px-3">
+      <favorites-list :products="favoritesListMock" />
+    </div>
+    <div class="d-flex justify-space-between pt-3 pt-lg-5">
+      <v-btn
+        block
+        color="error"
+      >
+        Remove all
+      </v-btn>
+    </div>
+  </v-card>
 </template>
 
 <script setup lang='ts'>
 import Product from '@/types/product';
 import FavoritesList from '@/components/Favorites/FavoritesList/FavoritesList.vue';
+import { onMounted } from 'vue';
 const favoritesListMock: Product[] = [
   {
     id: (Math.random() * 10),
@@ -67,6 +73,10 @@ const favoritesListMock: Product[] = [
     sizes: ['s', 'm', 'l', 'xl', '2xl', '3xl', '4xl'],
   },
 ];
+
+onMounted(() => {
+  console.log('mounted');
+});
 </script>
 
 <style scoped>

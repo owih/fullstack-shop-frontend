@@ -5,7 +5,7 @@
   >
     <custom-loader
       :width="6"
-      :size="72"
+      :size="92"
     />
   </div>
   <catalog-detail-item

@@ -18,7 +18,6 @@ export const useCustomNotifyStore = defineStore('notify-store', () => {
     });
 
     notifies.value.push(notify);
-    console.log(notifies.value);
   };
 
   const removeNotify = async (id: number) => {

@@ -16,7 +16,7 @@
     <v-text-field
       v-model="formData.name"
       :readonly="loading"
-      :rules="[rules.required]"
+      :rules="[rules.name]"
       variant="outlined"
       class="mb-3"
       clearable
@@ -27,10 +27,11 @@
     <v-text-field
       v-model="formData.password"
       :readonly="loading"
-      :rules="[rules.required]"
+      :rules="[rules.password]"
       variant="outlined"
       clearable
       label="Password"
+      type="password"
       placeholder="Enter your password"
     />
 
@@ -38,7 +39,7 @@
 
     <v-btn
       :disabled="!form"
-      :loading="loading"
+      :loading="props.pending"
       block
       color="success"
       size="large"
@@ -51,9 +52,15 @@
 </template>
 
 <script setup lang='ts'>
-import { reactive, ref } from 'vue';
+import { PropType, reactive, ref } from 'vue';
 import RegistrationFormType from '@/types/registrationFormType';
 
+const props = defineProps({
+  pending: {
+    type: Boolean as PropType<boolean>,
+    required: true,
+  }
+});
 const emits = defineEmits<{(e: 'registration', value: RegistrationFormType):void}>();
 
 const form = ref<boolean>(false);
@@ -66,7 +73,8 @@ const formData = reactive<RegistrationFormType>({
 });
 
 const rules = {
-  required: (value:string) => !!value || 'Required.',
+  name: (value:string) => value.length > 1 || 'Minimum 2 characters.',
+  password: (value:string) => value.length > 5 || 'Minimum 6 characters.',
   email: (value:string) => {
     const pattern:RegExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return pattern.test(value) || 'Invalid e-mail.';

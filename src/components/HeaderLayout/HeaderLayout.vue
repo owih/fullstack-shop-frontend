@@ -47,14 +47,20 @@
             @click="onClickCart"
           >
             <v-badge
-              content="2"
+              v-if="cartStore.getProducts.length"
               color="error"
+              :content="cartStore.getProducts.length"
             >
               <v-icon
                 icon="mdi-cart-outline"
                 size="large"
               />
             </v-badge>
+            <v-icon
+              v-else
+              icon="mdi-cart-outline"
+              size="large"
+            />
           </v-btn>
 
           <v-btn
@@ -63,7 +69,8 @@
             @click="onClickFavorites"
           >
             <v-badge
-              content="2"
+              v-if="cartStore.getProducts.length"
+              :content="cartStore.getProducts.length"
               color="error"
             >
               <v-icon
@@ -71,6 +78,11 @@
                 size="large"
               />
             </v-badge>
+            <v-icon
+              v-else
+              icon="mdi-heart"
+              size="large"
+            />
           </v-btn>
 
           <v-btn
@@ -80,7 +92,6 @@
             size="large"
             class="d-none d-lg-inline-flex"
           />
-
           <v-app-bar-nav-icon
             class="d-lg-none"
             @click="onClickMenu"
@@ -93,14 +104,32 @@
 
 <script setup lang="ts">
 import { useDialogsStore } from '@/store/useDialogsStore';
+import { useUserStore } from '@/store/useUserStore';
+import { useRouter } from 'vue-router';
+import { useCustomNotifyStore } from '@/store/useCustomNotifyStore';
+import { useCartStore } from '@/store/useCartStore';
 
 const dialogsStore = useDialogsStore();
+const userStore = useUserStore();
+const router = useRouter();
+const notifyStore = useCustomNotifyStore();
+const cartStore = useCartStore();
+
 const onClickFavorites = () => {
-  console.log('fav');
-  dialogsStore.toggleModal('favorites');
+  if (userStore.getIsUserAuth) {
+    dialogsStore.toggleModal('favorites');
+    return;
+  }
+  router.push({ name: 'Auth' });
+  notifyStore.addNotify('You need to be Authorized', 'Error');
 };
 const onClickCart = () => {
-  dialogsStore.toggleModal('cart');
+  if (userStore.getIsUserAuth) {
+    dialogsStore.toggleModal('cart');
+    return;
+  }
+  router.push({ name: 'Auth' });
+  notifyStore.addNotify('You need to be Authorized', 'Error');
 };
 
 const onClickMenu = () => {

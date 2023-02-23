@@ -3,6 +3,9 @@ import { computed, ref } from 'vue';
 import Product from '@/types/product';
 import { getProductFromApi, getProductsFromApi } from '@/api/useProductsApi';
 import { useCustomNotifyStore } from '@/store/useCustomNotifyStore';
+import { AxiosError, AxiosResponse } from 'axios';
+import ProductResponse from '@/types/response/productResponse';
+import TypedProductsResponse from '@/types/response/typedProductsResponse';
 
 export const useProductsStore = defineStore('products-store', () => {
   const products = ref<Product[]>([]);
@@ -20,28 +23,46 @@ export const useProductsStore = defineStore('products-store', () => {
   const getProductsFromApiToStore = async (page?: number, limit?: number) => {
     try {
       pending.value = true;
-      const  { data } = await getProductsFromApi(page, limit);
-      products.value = data.products;
+
+      const  { data } = await getProductsFromApi(page, limit) as AxiosResponse<TypedProductsResponse<ProductResponse[], number>>;
+      console.log(data);
+      products.value = data.products.map((item) => {
+        return {
+          ...item,
+          type: item.type.map((item) => item.type),
+        };
+      });
       count.value = data.count;
-      pending.value = false;
-      console.log(products.value);
 
       customNotifyStore.addNotify('Products fetched', 'Success');
     } catch (e) {
-      pending.value = false;
+      console.log(e);
+      if (e instanceof AxiosError) {
+        customNotifyStore.addNotify(e.response?.data?.message, 'Error');
+        return;
+      }
       customNotifyStore.addNotify('Error while product fetching', 'Error');
+    } finally {
+      pending.value = false;
     }
   };
 
   const getProductFromApiToStore = async (id:number) => {
     try {
       pending.value = true;
+
       const { data } = await getProductFromApi(id);
       product.value = data.product;
-      pending.value = false;
+
+      customNotifyStore.addNotify('Product fetched', 'Success');
     } catch (e) {
-      pending.value = false;
+      if (e instanceof AxiosError) {
+        customNotifyStore.addNotify(e.response?.data?.message, 'Error');
+        return;
+      }
       customNotifyStore.addNotify('Error while product fetching', 'Error');
+    } finally {
+      pending.value = false;
     }
   };
 

@@ -1,6 +1,11 @@
 <template>
-  <v-container class="h-100 d-flex align-center justify-center">
-    <profile-section />
+  <v-container class="h-100 d-flex flex-column">
+    <h1 class="mt-4 mt-lg-8 mb-4">
+      Profile
+    </h1>
+    <section class="h-100 position-relative">
+      <profile-section />
+    </section>
   </v-container>
 </template>
 

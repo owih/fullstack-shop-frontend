@@ -1,10 +1,10 @@
 <template>
   <v-dialog
-    v-model="dialogsStore.getDialogsIsOpenStates.cart"
+    v-model="dialogsStore.dialogsIsOpenState.cart"
     width="768"
-    class="overflow-hidden"
+    min-height="400"
   >
-    <v-card class="pa-2 pa-lg-6">
+    <v-card class="pa-2 pa-lg-6 flex-grow-1">
       <v-btn
         class="close"
         variant="text"

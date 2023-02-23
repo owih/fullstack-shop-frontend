@@ -1,8 +1,7 @@
 import { defineStore } from 'pinia';
 import { computed, reactive } from 'vue';
 import Dialogs from '@/types/dialogs';
-
-type DialogType = 'cart' | 'menu' | 'favorites'
+import DialogType from '@/types/dialogType';
 
 export const useDialogsStore = defineStore('dialogs-store', () => {
   const dialogsIsOpenState = reactive<Dialogs>({
@@ -14,7 +13,6 @@ export const useDialogsStore = defineStore('dialogs-store', () => {
   const getDialogsIsOpenStates = computed(():Dialogs => dialogsIsOpenState);
 
   const toggleModal = (name: DialogType, isOpen: boolean | null = null) => {
-    console.log(dialogsIsOpenState);
     if (isOpen === null) {
       dialogsIsOpenState[name] = !dialogsIsOpenState[name];
       return;
@@ -26,6 +24,7 @@ export const useDialogsStore = defineStore('dialogs-store', () => {
   };
 
   return {
+    dialogsIsOpenState,
     getDialogsIsOpenStates,
     toggleModal,
   };

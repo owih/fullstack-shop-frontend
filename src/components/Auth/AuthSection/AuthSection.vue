@@ -6,10 +6,12 @@
   >
     <auth-form
       v-if="isCurrentFormAuth"
+      :pending="userStore.getPending.auth"
       @auth="onAuth"
     />
     <registration-form
       v-if="!isCurrentFormAuth"
+      :pending="userStore.getPending.auth"
       @registration="onRegistration"
     />
 
@@ -40,7 +42,9 @@ import RegistrationForm from '@/components/Auth/RegistrationForm/RegistrationFor
 import RegistrationFormType from '@/types/registrationFormType';
 import { ref } from 'vue';
 import { useUserStore } from '@/store/useUserStore';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const userStore = useUserStore();
 const isCurrentFormAuth = ref<boolean>(true);
 
@@ -48,12 +52,20 @@ const onSwitchAuthType = (isNewFormAuth:boolean):void => {
   isCurrentFormAuth.value = isNewFormAuth;
 };
 
-const onRegistration = (formData:RegistrationFormType):void => {
-  console.log(formData);
+const onRegistration = async (formData:RegistrationFormType) => {
+  await userStore.registration(formData);
+
+  if (userStore.getIsUserAuth) {
+    await router.push({ name: 'Profile' });
+  }
 };
 
-const onAuth = (formData:AuthFormType):void => {
-  userStore.login(formData);
+const onAuth = async (formData:AuthFormType) => {
+  await userStore.login(formData);
+
+  if (userStore.getIsUserAuth) {
+    await router.push({ name: 'Profile' });
+  }
 };
 </script>
 
