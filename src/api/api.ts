@@ -24,7 +24,7 @@ class Api {
     const url = this.base + path;
     const header = this.getHeader();
 
-    if (method === 'get') {
+    if (method === 'get' || method === 'delete') {
       return axios[method](url, header);
     }
     return axios[method](url, data, header);
@@ -32,7 +32,6 @@ class Api {
 
   updateToken = (token: string) => {
     localStorage.setItem('token', token);
-    console.log(token);
   };
 
   removeToken = () => {

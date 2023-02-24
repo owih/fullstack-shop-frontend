@@ -42,7 +42,7 @@
 
 <script setup lang='ts'>
 import { PropType, reactive, ref } from 'vue';
-import AuthFormType from '@/types/authFormType';
+import AuthFormType from '@/types/auth/authFormType';
 
 const props = defineProps({
   pending: {

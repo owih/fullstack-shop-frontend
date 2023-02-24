@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { computed, Ref, ref } from 'vue';
-import CustomNotify from '@/types/customNotify';
-import CustomNotifyType from '@/types/customNotifyType';
+import CustomNotify from '@/types/notify/customNotify';
+import CustomNotifyType from '@/types/notify/customNotifyType';
 
 export const useCustomNotifyStore = defineStore('notify-store', () => {
   const notifies = ref<Ref<CustomNotify>[]>([]);
@@ -9,7 +9,6 @@ export const useCustomNotifyStore = defineStore('notify-store', () => {
   const getNotifies = computed((): Ref<CustomNotify>[] => notifies.value);
 
   const addNotify = (text: string, type?: CustomNotifyType) => {
-    console.log('ADD');
     const notify = ref<CustomNotify>({
       id: Number(Date.now()),
       model: true,

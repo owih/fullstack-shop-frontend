@@ -3,7 +3,7 @@
     <h1 class="mt-4 mt-lg-8 mb-4">
       Catalog
     </h1>
-    <CatalogSection />
+    <catalog-section />
   </v-container>
 </template>
 

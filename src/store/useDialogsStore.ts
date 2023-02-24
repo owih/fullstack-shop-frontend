@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { computed, reactive } from 'vue';
-import Dialogs from '@/types/dialogs';
-import DialogType from '@/types/dialogType';
+import Dialogs from '@/types/dialog/dialogs';
+import DialogType from '@/types/dialog/dialogType';
 
 export const useDialogsStore = defineStore('dialogs-store', () => {
   const dialogsIsOpenState = reactive<Dialogs>({

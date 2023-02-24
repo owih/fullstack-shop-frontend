@@ -2,7 +2,7 @@ import ProductResponse from '@/types/response/productResponse';
 
 interface CartResponse {
   count: number,
-  product: ProductResponse
+  product: ProductResponse,
 }
 
 export default CartResponse;

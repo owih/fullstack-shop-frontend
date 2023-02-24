@@ -16,7 +16,7 @@
 <script setup lang='ts'>
 import { PropType } from 'vue';
 import CatalogItem from '@/components/Catalog/CatalogItem/CatalogItem.vue';
-import Product from '@/types/product';
+import Product from '@/types/product/product';
 
 const props = defineProps({
   list: {

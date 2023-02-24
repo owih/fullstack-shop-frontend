@@ -4,80 +4,66 @@
     class="h-100 flex-grow-1 d-flex flex-column"
   >
     <h2 class="pb-3 px-3 px-lg-0 pb-lg-5">
-      Favorites {{ `(${favoritesListMock.length})` }}
+      Favorites {{ `(${favoritesStore.getPending.get ? '?' : favoritesStore.getProducts.length})` }}
     </h2>
-    <div class="overflow-y-auto px-3">
-      <favorites-list :products="favoritesListMock" />
+    <div
+      v-if="favoritesStore.getPending.get"
+      class="w-100 h-100 position-relative flex-grow-1"
+    >
+      <custom-loader
+        :width="6"
+        :size="92"
+      />
     </div>
-    <div class="d-flex justify-space-between pt-3 pt-lg-5">
+    <div
+      v-if="!favoritesStore.getPending.get && favoritesStore.getProducts.length"
+      class="overflow-y-auto px-3"
+    >
+      <favorites-list :products="favoritesStore.getProducts" />
+    </div>
+    <div
+      v-if="!favoritesStore.getPending.get && favoritesStore.getProducts.length"
+      class="d-flex justify-space-between pt-3 pt-lg-5"
+    >
       <v-btn
         block
         color="error"
+        @click="onClear"
       >
-        Remove all
+        Clear all
+      </v-btn>
+    </div>
+    <div
+      v-if="!favoritesStore.getPending.get && !favoritesStore.getProducts.length"
+      class="flex-grow-1 d-flex flex-column justify-space-between"
+    >
+      <div class="pb-3">
+        Your favorite list is currently empty ;(
+      </div>
+      <v-btn
+        :to="{ name: 'Catalog' }"
+        variant="tonal"
+        @click="onClickCatalog"
+      >
+        Go to catalog
       </v-btn>
     </div>
   </v-card>
 </template>
 
 <script setup lang='ts'>
-import Product from '@/types/product';
 import FavoritesList from '@/components/Favorites/FavoritesList/FavoritesList.vue';
-import { onMounted } from 'vue';
-const favoritesListMock: Product[] = [
-  {
-    id: (Math.random() * 10),
-    name: 'T-shirt',
-    price: 333,
-    description: 'Some text description',
-    type: 'T-shirt',
-    sale: 30,
-    stock: 33,
-    sizes: ['s', 'm', 'l', 'xl', '2xl', '3xl', '4xl'],
-  },
-  {
-    id: (Math.random() * 10),
-    name: 'T-shirt',
-    price: 112,
-    description: 'Some text description Some text description Some text description Some text description',
-    type: 'T-shirt',
-    stock: 33,
-    sizes: ['s', 'm', 'l', 'xl', '2xl', '3xl', '4xl'],
-  },
-  {
-    id: (Math.random() * 10),
-    name: 'T-shirt',
-    price: 144,
-    description: 'Some text description',
-    type: 'T-shirt',
-    sale: 15,
-    stock: 33,
-    sizes: ['s', 'm', 'l', 'xl', '2xl', '3xl', '4xl'],
-  },
-  {
-    id: (Math.random() * 10),
-    name: 'T-shirt',
-    price: 230,
-    description: 'Some text description',
-    type: 'T-shirt',
-    stock: 33,
-    sizes: ['s', 'm', 'l', 'xl', '2xl', '3xl', '4xl'],
-  },
-  {
-    id: (Math.random() * 10),
-    name: 'T-shirt',
-    price: 150,
-    description: 'Some text description',
-    type: 'T-shirt',
-    stock: 33,
-    sizes: ['s', 'm', 'l', 'xl', '2xl', '3xl', '4xl'],
-  },
-];
+import CustomLoader from '@/components/CustomLoader/CustomLoader.vue';
+import { useFavoritesStore } from '@/store/useFavoritesStore';
+import { useDialogsStore } from '@/store/useDialogsStore';
 
-onMounted(() => {
-  console.log('mounted');
-});
+const favoritesStore = useFavoritesStore();
+const dialogsStore = useDialogsStore();
+
+const onClear = () => {
+  favoritesStore.clearFavorites();
+};
+const onClickCatalog = () => {
+  dialogsStore.toggleModal('favorites', false);
+};
 </script>
-
-<style scoped>
-</style>

@@ -12,7 +12,7 @@
 
 <script setup lang='ts'>
 import { PropType } from 'vue';
-import Product from '@/types/product';
+import Product from '@/types/product/product';
 import CartItem from '@/components/Cart/CartItem/CartItem.vue';
 
 const props = defineProps({

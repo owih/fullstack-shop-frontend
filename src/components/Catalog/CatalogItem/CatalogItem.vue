@@ -18,11 +18,9 @@
       SALE
     </div>
     <div class="like text-shades-white">
-      <v-btn
-        icon="mdi-heart"
-        variant="text"
-        class="text-shades-black"
-        @click="onClickLike"
+      <custom-like-control
+        :productId="props.product.id"
+        size="small"
       />
     </div>
     <v-row>
@@ -82,32 +80,30 @@
         Detail
       </v-btn>
 
-      <v-btn
-        append-icon="mdi-cart-plus"
-        :loading="cartStore.getPending.add"
-        @click="onClickAdd"
-      >
-        Add
-      </v-btn>
+      <custom-add-control
+        v-if="!isProductInCart"
+        :productId="props.product.id"
+      />
+      <custom-counter
+        v-else
+        :productId="props.product.id"
+        :max="props.product.stock"
+        class="justify-end"
+      />
     </v-card-actions>
   </v-card>
 </template>
 
 <script setup lang='ts'>
-import { PropType } from 'vue';
-import Product from '@/types/product';
+import { computed, PropType } from 'vue';
+import Product from '@/types/product/product';
 import CustomImageMock from '@/components/CustomImageMock/CustomImageMock.vue';
+import CustomCounter from '@/components/CustomCounter/CustomCounter.vue';
+import CustomAddControl from '@/components/CustomAddControl/CustomAddControl.vue';
 import { useCartStore } from '@/store/useCartStore';
-import { useUserStore } from '@/store/useUserStore';
-import { useFavoritesStore } from '@/store/useFavoritesStore';
-import { useRouter } from 'vue-router';
-import { useCustomNotifyStore } from '@/store/useCustomNotifyStore';
+import CustomLikeControl from '@/components/CustomLikeControl/CustomLikeControl.vue';
 
 const cartStore = useCartStore();
-const userStore = useUserStore();
-const favoritesStore = useFavoritesStore();
-const router = useRouter();
-const notifyStore = useCustomNotifyStore();
 
 const props = defineProps({
   product: {
@@ -116,23 +112,7 @@ const props = defineProps({
   }
 });
 const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
-
-const onClickAdd = () => {
-  if (userStore.getIsUserAuth) {
-    cartStore.addProductToCart(props.product.id);
-    return;
-  }
-  router.push({ name: 'Auth' });
-  notifyStore.addNotify('You need to be Authorized', 'Error');
-};
-const onClickLike = ():void => {
-  if (userStore.getIsUserAuth) {
-    console.log('add');
-    return;
-  }
-  router.push({ name: 'Auth' });
-  notifyStore.addNotify('You need to be Authorized', 'Error');
-};
+const isProductInCart = computed(() => cartStore.getProducts.find((item) => item.id === props.product.id));
 </script>
 
 <style scoped lang="scss">

@@ -32,7 +32,3 @@ import { useCustomNotifyStore } from '@/store/useCustomNotifyStore';
 
 const customNotifyStore = useCustomNotifyStore();
 </script>
-
-<style scoped>
-
-</style>

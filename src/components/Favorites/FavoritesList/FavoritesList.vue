@@ -12,7 +12,7 @@
 
 <script setup lang='ts'>
 import { PropType } from 'vue';
-import Product from '@/types/product';
+import Product from '@/types/product/product';
 import FavoritesItem from '@/components/Favorites/FavoritesItem/FavoritesItem.vue';
 
 const props = defineProps({

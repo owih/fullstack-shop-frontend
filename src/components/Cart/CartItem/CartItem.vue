@@ -9,6 +9,7 @@
       variant="text"
       color="error"
       size="small"
+      :loading="cartStore.getPendingProducts.includes(product.id)"
       @click="onRemove"
     />
     <v-row>
@@ -29,8 +30,9 @@
       <v-col class="d-flex flex-column flex-wrap">
         <v-card-title class="pa-0 mb-2 pr-4">
           <router-link
-            :to="`/catalog/${props.product.id}`"
+            :to="{ name: 'CatalogDetail', params: { id: props.product.id } }"
             class="text-decoration-none"
+            @click="onClickDetail"
           >
             {{ props.product.name }}
           </router-link>
@@ -45,7 +47,9 @@
               {{ item.name }}
             </span>
           </div>
-          {{ `Stock: ${props.product.stock}` }}
+          <div :class="{'text-error font-weight-bold': props.product.count === props.product.stock }">
+            {{ `Stock: ${props.product.stock}` }}
+          </div>
         </v-card-subtitle>
         <v-card-item class="pa-0">
           <v-row class="justify-space-between align-center">
@@ -68,9 +72,11 @@
               </div>
             </v-col>
             <v-col cols="auto">
-              <v-card-actions class="pa-0 d-flex justify-space-between">
-                <custom-counter :value="props.product.count" />
-              </v-card-actions>
+              <custom-counter
+                :productId="props.product.id"
+                :max="props.product.stock"
+                class="justify-end"
+              />
             </v-col>
           </v-row>
         </v-card-item>
@@ -81,10 +87,13 @@
 
 <script setup lang='ts'>
 import { PropType } from 'vue';
-import CartProduct from '@/types/cartProduct';
+import CartProduct from '@/types/product/cartProduct';
 import CustomImageMock from '@/components/CustomImageMock/CustomImageMock.vue';
 import { useCartStore } from '@/store/useCartStore';
 import CustomCounter from '@/components/CustomCounter/CustomCounter.vue';
+import { useDialogsStore } from '@/store/useDialogsStore';
+import { useRoute } from 'vue-router';
+import { useProductsStore } from '@/store/useProductsStore';
 
 const props = defineProps({
   product: {
@@ -95,9 +104,18 @@ const props = defineProps({
 
 const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
 const cartStore = useCartStore();
+const dialogsStore = useDialogsStore();
+const route = useRoute();
+const productStore = useProductsStore();
 
 const onRemove = () => {
   cartStore.deleteProductFromCart(props.product.id);
+};
+const onClickDetail = () => {
+  dialogsStore.toggleModal('cart', false);
+  if (route.name === 'CatalogDetail') {
+    productStore.getProductFromApiToStore(props.product.id);
+  }
 };
 </script>
 

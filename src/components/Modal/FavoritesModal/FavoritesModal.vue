@@ -4,7 +4,7 @@
     width="768"
     min-height="400"
   >
-    <v-card class="pa-2 pa-lg-6 overflow-hidden">
+    <v-card class="pa-2 pa-lg-6 flex-grow-1 overflow-hidden">
       <v-btn
         class="close"
         variant="text"

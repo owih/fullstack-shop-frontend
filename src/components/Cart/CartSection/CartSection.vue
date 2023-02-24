@@ -22,14 +22,17 @@
       <div class="px-3">
         <cart-list :products="cartStore.getProducts" />
       </div>
-      <div class="d-flex justify-space-between pt-3 pt-lg-5">
-        <v-btn
-          block
-          color="primary"
-        >
-          Checkout
-        </v-btn>
-      </div>
+    </div>
+    <div
+      v-if="!cartStore.getPending.get && cartStore.getProducts.length"
+      class="d-flex justify-space-between pt-3 pt-lg-5"
+    >
+      <v-btn
+        block
+        color="primary"
+      >
+        Checkout
+      </v-btn>
     </div>
     <div
       v-if="!cartStore.getPending.get && !cartStore.getProducts.length"

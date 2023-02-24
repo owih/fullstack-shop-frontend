@@ -15,7 +15,7 @@
             variant="text"
             icon="mdi-alpha-n-box"
             color="primary"
-            to="/"
+            :to="{ name: 'Home' }"
           />
         </v-col>
         <v-col
@@ -24,13 +24,13 @@
           cols="auto"
         >
           <v-btn
-            to="/catalog"
+            :to="{ name: 'Catalog' }"
             class="mr-2"
           >
             Catalog
           </v-btn>
           <v-btn
-            to="info"
+            :to="{ name: 'Info' }"
             class="mr-2"
           >
             Info
@@ -41,57 +41,75 @@
           class="text-right"
           cols="auto"
         >
-          <v-btn
-            variant="text"
-            class="d-none d-lg-inline-flex"
-            @click="onClickCart"
-          >
-            <v-badge
-              v-if="cartStore.getProducts.length"
-              color="error"
-              :content="cartStore.getProducts.length"
+          <v-row class="justify-end align-center ma-n1">
+            <v-col
+              cols="auto"
+              class="pa-1"
             >
-              <v-icon
-                icon="mdi-cart-outline"
-                size="large"
-              />
-            </v-badge>
-            <v-icon
-              v-else
-              icon="mdi-cart-outline"
-              size="large"
-            />
-          </v-btn>
-
-          <v-btn
-            variant="text"
-            class="d-none d-lg-inline-flex"
-            @click="onClickFavorites"
-          >
-            <v-badge
-              v-if="cartStore.getProducts.length"
-              :content="cartStore.getProducts.length"
-              color="error"
+              <v-btn
+                variant="text"
+                class="d-none d-lg-inline-flex"
+                @click="onClickCart"
+              >
+                <v-badge
+                  v-if="cartStore.getProducts.length"
+                  color="error"
+                  :content="cartStore.getProducts.length"
+                >
+                  <v-icon
+                    icon="mdi-cart-outline"
+                    size="large"
+                  />
+                </v-badge>
+                <v-icon
+                  v-else
+                  icon="mdi-cart-outline"
+                  size="large"
+                />
+              </v-btn>
+            </v-col>
+            <v-col
+              cols="auto"
+              class="pa-1"
             >
-              <v-icon
-                icon="mdi-heart"
-                size="large"
-              />
-            </v-badge>
-            <v-icon
-              v-else
-              icon="mdi-heart"
-              size="large"
-            />
-          </v-btn>
-
-          <v-btn
-            to="profile"
-            icon="mdi-account"
-            variant="text"
-            size="large"
-            class="d-none d-lg-inline-flex"
-          />
+              <v-btn
+                variant="text"
+                class="d-none d-lg-inline-flex"
+                @click="onClickFavorites"
+              >
+                <v-badge
+                  v-if="favoritesStore.getProducts.length"
+                  :content="favoritesStore.getProducts.length"
+                  color="error"
+                >
+                  <v-icon
+                    icon="mdi-heart"
+                    size="large"
+                  />
+                </v-badge>
+                <v-icon
+                  v-else
+                  icon="mdi-heart"
+                  size="large"
+                />
+              </v-btn>
+            </v-col>
+            <v-col
+              cols="auto"
+              class="pa-1"
+            >
+              <v-btn
+                :to="{ name: 'Profile' }"
+                variant="text"
+                class="d-none d-lg-inline-flex"
+              >
+                <v-icon
+                  icon="mdi-account"
+                  size="large"
+                />
+              </v-btn>
+            </v-col>
+          </v-row>
           <v-app-bar-nav-icon
             class="d-lg-none"
             @click="onClickMenu"
@@ -108,9 +126,11 @@ import { useUserStore } from '@/store/useUserStore';
 import { useRouter } from 'vue-router';
 import { useCustomNotifyStore } from '@/store/useCustomNotifyStore';
 import { useCartStore } from '@/store/useCartStore';
+import { useFavoritesStore } from '@/store/useFavoritesStore';
 
 const dialogsStore = useDialogsStore();
 const userStore = useUserStore();
+const favoritesStore = useFavoritesStore();
 const router = useRouter();
 const notifyStore = useCustomNotifyStore();
 const cartStore = useCartStore();

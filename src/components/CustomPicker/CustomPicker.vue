@@ -44,6 +44,3 @@ const props = defineProps({
 //   emits('update:modelValue', text);
 // };
 </script>
-
-<style scoped>
-</style>

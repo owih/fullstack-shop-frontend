@@ -53,7 +53,7 @@
 
 <script setup lang='ts'>
 import { PropType, reactive, ref } from 'vue';
-import RegistrationFormType from '@/types/registrationFormType';
+import RegistrationFormType from '@/types/auth/registrationFormType';
 
 const props = defineProps({
   pending: {

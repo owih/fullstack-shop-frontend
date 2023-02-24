@@ -54,7 +54,7 @@ import { useDialogsStore } from '@/store/useDialogsStore';
 import { useUserStore } from '@/store/useUserStore';
 import { useRouter } from 'vue-router';
 import useSideLinks from '@/composibles/useSideLinks';
-import DialogType from '@/types/dialogType';
+import DialogType from '@/types/dialog/dialogType';
 import { useCustomNotifyStore } from '@/store/useCustomNotifyStore';
 
 const userStore = useUserStore();

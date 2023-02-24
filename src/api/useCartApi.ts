@@ -21,7 +21,6 @@ export const addProductToCartApi = (productId: number) => {
 };
 
 export const deleteProductFromCartApi = (productId: number) => {
-  const data = { productId };
-  const path = `${userPathUrl}/`;
-  return Api.request('put', path, data);
+  const path = `${userPathUrl}/${productId}`;
+  return Api.request('delete', path);
 };

@@ -9,9 +9,9 @@ import {
   updateToken,
   updateUserInfoFromApi, updateUserPasswordFromApi, userApiLogout
 } from '@/api/useUserApi';
-import AuthFormType from '@/types/authFormType';
-import UserInfo from '@/types/userInfo';
-import UserPassword from '@/types/userPassword';
+import AuthFormType from '@/types/auth/authFormType';
+import UserInfo from '@/types/user/userInfo';
+import UserPassword from '@/types/user/userPassword';
 
 export const useUserStore = defineStore('user-store', () => {
   const userInfo = ref<UserInfo>({});
@@ -44,9 +44,7 @@ export const useUserStore = defineStore('user-store', () => {
       isUserWasRequested.value = true;
       pending.user = true;
       const  { data } = await getIsUserAuthFromApi();
-      console.log(data);
       if (data.token) {
-        console.log('update token');
         updateToken(data.token);
         isUserAuth.value = true;
       } else {
@@ -56,7 +54,6 @@ export const useUserStore = defineStore('user-store', () => {
       pending.user = false;
       customNotifyStore.addNotify('Welcome back!', 'Success');
     } catch (e) {
-      console.log('Not auth');
       isUserAuth.value = false;
       pending.user = false;
       customNotifyStore.addNotify('Unauthorized', 'Error');
@@ -64,7 +61,6 @@ export const useUserStore = defineStore('user-store', () => {
   };
 
   const login = async (formData: AuthFormType) => {
-    console.log(formData);
     try {
       pending.auth = true;
       const  { data } = await loginUserFromApi(formData);
@@ -114,7 +110,6 @@ export const useUserStore = defineStore('user-store', () => {
       if (data.token) {
         updateToken(data.token);
       }
-      console.log(data);
 
       pending.update = false;
       customNotifyStore.addNotify('User info was updated!', 'Success');

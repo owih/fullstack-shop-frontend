@@ -1,4 +1,4 @@
-import SideLink from '@/types/sideLink';
+import SideLink from '@/types/composables/sideLink';
 
 export default [
   {

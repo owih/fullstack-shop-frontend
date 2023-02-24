@@ -28,7 +28,7 @@
 
 <script setup lang='ts'>
 import { PropType } from 'vue';
-import ProductImage from '@/types/productImage';
+import ProductImage from '@/types/product/productImage';
 
 const props = defineProps({
   slides: {

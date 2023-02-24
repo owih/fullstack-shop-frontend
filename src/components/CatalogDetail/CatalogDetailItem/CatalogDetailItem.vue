@@ -43,10 +43,12 @@
                 :key="item.id"
                 class="p1-2"
               >
-                {{ item.type.name }}
+                {{ item.name }}
               </span>
             </div>
-            {{ `Stock: ${props.product.stock}` }}
+            <div :class="{'text-error font-weight-bold': isProductInCart && isProductInCart.count === props.product.stock }">
+              {{ `Stock: ${props.product.stock}` }}
+            </div>
           </div>
           <div class="mb-3">
             {{ props.product.description }}
@@ -70,24 +72,27 @@
             </div>
           </div>
           <v-card-actions class="px-0">
-            <v-btn
-              variant="elevated"
-              class="text-shades-white"
-              size="large"
-              @click="onClickLike"
-            >
-              <v-icon icon="mdi-heart" />
-            </v-btn>
-            <v-btn
-              append-icon="mdi-cart-plus"
-              variant="elevated"
-              color="primary"
-              class="text-shades-white px-6"
-              size="large"
-              @click="onClickAdd"
-            >
-              Add
-            </v-btn>
+            <v-row class="align-center">
+              <v-col cols="auto">
+                <custom-like-control
+                  size="small"
+                  :productId="props.product.id"
+                />
+              </v-col>
+              <v-col cols="auto">
+                <custom-add-control
+                  v-if="!isProductInCart"
+                  :productId="props.product.id"
+                  size="large"
+                />
+                <custom-counter
+                  v-else
+                  :productId="props.product.id"
+                  :max="props.product.stock"
+                  size="large"
+                />
+              </v-col>
+            </v-row>
           </v-card-actions>
         </div>
       </v-col>
@@ -97,14 +102,13 @@
 
 <script setup lang='ts'>
 import CatalogDetailCarousel from '@/components/CatalogDetail/CatalogDetailCarousel/CatalogDetailCarousel.vue';
-import { PropType } from 'vue';
-import Product from '@/types/product';
+import CustomLikeControl from '@/components/CustomLikeControl/CustomLikeControl.vue';
+import { computed, PropType } from 'vue';
+import Product from '@/types/product/product';
 import { useCartStore } from '@/store/useCartStore';
-import { useUserStore } from '@/store/useUserStore';
-import { useFavoritesStore } from '@/store/useFavoritesStore';
-import { useRouter } from 'vue-router';
-import { useCustomNotifyStore } from '@/store/useCustomNotifyStore';
 import CustomImageMock from '@/components/CustomImageMock/CustomImageMock.vue';
+import CustomCounter from '@/components/CustomCounter/CustomCounter.vue';
+import CustomAddControl from '@/components/CustomAddControl/CustomAddControl.vue';
 
 const props = defineProps({
   product: {
@@ -114,27 +118,7 @@ const props = defineProps({
 });
 
 const cartStore = useCartStore();
-const userStore = useUserStore();
-const favoritesStore = useFavoritesStore();
-const router = useRouter();
-const notifyStore = useCustomNotifyStore();
 
 const baseBackendUrl: string = import.meta.env.VITE_BACKEND_BASE_URL;
-
-const onClickAdd = () => {
-  if (userStore.getIsUserAuth) {
-    console.log('add');
-    return;
-  }
-  router.push({ name: 'Auth' });
-  notifyStore.addNotify('You need to be Authorized', 'Error');
-};
-const onClickLike = ():void => {
-  if (userStore.getIsUserAuth) {
-    console.log('add');
-    return;
-  }
-  router.push({ name: 'Auth' });
-  notifyStore.addNotify('You need to be Authorized', 'Error');
-};
+const isProductInCart = computed(() => cartStore.getProducts.find((item) => item.id === props.product.id));
 </script>

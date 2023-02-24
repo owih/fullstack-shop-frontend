@@ -37,21 +37,30 @@
 </template>
 <script setup lang='ts'>
 import AuthForm from '@/components/Auth/AuthForm/AuthForm.vue';
-import AuthFormType from '@/types/authFormType';
+import AuthFormType from '@/types/auth/authFormType';
 import RegistrationForm from '@/components/Auth/RegistrationForm/RegistrationForm.vue';
-import RegistrationFormType from '@/types/registrationFormType';
+import RegistrationFormType from '@/types/auth/registrationFormType';
 import { ref } from 'vue';
 import { useUserStore } from '@/store/useUserStore';
 import { useRouter } from 'vue-router';
+import { useCartStore } from '@/store/useCartStore';
+import { useFavoritesStore } from '@/store/useFavoritesStore';
 
 const router = useRouter();
 const userStore = useUserStore();
+const cartStore = useCartStore();
+const favoritesStore = useFavoritesStore();
+
 const isCurrentFormAuth = ref<boolean>(true);
+
+const updateStates = () => {
+  cartStore.getCartFromApiToStore();
+  favoritesStore.getFavoritesFromApiToStore();
+};
 
 const onSwitchAuthType = (isNewFormAuth:boolean):void => {
   isCurrentFormAuth.value = isNewFormAuth;
 };
-
 const onRegistration = async (formData:RegistrationFormType) => {
   await userStore.registration(formData);
 
@@ -59,12 +68,12 @@ const onRegistration = async (formData:RegistrationFormType) => {
     await router.push({ name: 'Profile' });
   }
 };
-
 const onAuth = async (formData:AuthFormType) => {
   await userStore.login(formData);
 
   if (userStore.getIsUserAuth) {
     await router.push({ name: 'Profile' });
+    updateStates();
   }
 };
 </script>

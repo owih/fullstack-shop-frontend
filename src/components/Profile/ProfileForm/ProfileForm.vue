@@ -69,7 +69,7 @@
 
 <script setup lang="ts">
 import { onMounted, PropType, reactive, ref, watch } from 'vue';
-import UserInfo from '@/types/userInfo';
+import UserInfo from '@/types/user/userInfo';
 import useCountriesList from '@/composibles/useCountriesList';
 
 const props = defineProps({

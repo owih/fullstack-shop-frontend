@@ -1,8 +1,8 @@
 import useUrlBackendPaths from '@/composibles/useUrlBackendPaths';
 import Api from '@/api/api';
-import AuthFormType from '@/types/authFormType';
-import UserInfo from '@/types/userInfo';
-import UserPassword from '@/types/userPassword';
+import AuthFormType from '@/types/auth/authFormType';
+import UserInfo from '@/types/user/userInfo';
+import UserPassword from '@/types/user/userPassword';
 
 const userPathUrl = useUrlBackendPaths.user;
 
