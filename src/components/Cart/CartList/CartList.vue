@@ -12,12 +12,12 @@
 
 <script setup lang='ts'>
 import { PropType } from 'vue';
-import Product from '@/types/product/product';
 import CartItem from '@/components/Cart/CartItem/CartItem.vue';
+import CartProduct from '@/types/product/cartProduct';
 
 const props = defineProps({
   products: {
-    type: Array as PropType<Product[]>,
+    type: Array as PropType<CartProduct[]>,
     required: true,
   }
 });

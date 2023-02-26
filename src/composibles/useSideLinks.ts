@@ -1,4 +1,5 @@
 import SideLink from '@/types/composables/sideLink';
+import DialogType from '@/types/dialog/dialogType';
 
 export default [
   {
@@ -34,13 +35,13 @@ export default [
     icon: 'mdi-cart',
     title: 'Cart',
     value: 'cart',
-    modal: 'cart',
+    modal: 'cart' as DialogType,
   },
   {
     id: 5,
     icon: 'mdi-heart',
     title: 'Favorites',
     value: 'favorites',
-    modal: 'favorites',
+    modal: 'favorites' as DialogType,
   },
 ] as SideLink[];

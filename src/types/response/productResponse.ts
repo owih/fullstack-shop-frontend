@@ -9,7 +9,7 @@ interface ProductResponse {
   sale?: number,
   description?: string,
   stock: number,
-  image?: ProductImage[],
+  image: ProductImage[],
 }
 
 export default ProductResponse;

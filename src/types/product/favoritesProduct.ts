@@ -9,7 +9,7 @@ type FavoritesProduct = {
   sale?: number,
   description?: string,
   stock: number,
-  image?: ProductImage[],
+  image: ProductImage[],
   count: number,
 }
 

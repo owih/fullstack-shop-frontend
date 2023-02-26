@@ -9,7 +9,7 @@ type Product = {
   sale?: number,
   description?: string,
   stock: number,
-  image?: ProductImage[],
+  image: ProductImage[],
 }
 
 export default Product;

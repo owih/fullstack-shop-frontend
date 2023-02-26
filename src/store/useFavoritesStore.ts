@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia';
 import { computed, reactive, ref } from 'vue';
 import { useCustomNotifyStore } from '@/store/useCustomNotifyStore';
-import Product from '@/types/product/product';
 import {
   addProductToFavoritesApi,
   clearFavoritesApi,
@@ -11,9 +10,10 @@ import {
 import { AxiosError, AxiosResponse } from 'axios';
 import TypedFavoritesResponse from '@/types/response/typedFavoritesResponse';
 import FavoritesResponse from '@/types/response/favoritesResponse';
+import FavoritesProduct from '@/types/product/favoritesProduct';
 
 export const useFavoritesStore = defineStore('favorites-store', () => {
-  const products = ref<Product[]>([]);
+  const products = ref<FavoritesProduct[]>([]);
   const pending = reactive({
     get: false,
     update: false,
@@ -22,7 +22,7 @@ export const useFavoritesStore = defineStore('favorites-store', () => {
 
   const customNotifyStore = useCustomNotifyStore();
 
-  const getProducts = computed((): Product[] => products.value);
+  const getProducts = computed((): FavoritesProduct[] => products.value);
   const getPending = computed(() => pending);
   const getPendingProducts = computed((): number[] => pendingProducts.value);
 
@@ -31,7 +31,7 @@ export const useFavoritesStore = defineStore('favorites-store', () => {
       return {
         ...item.product,
         type: item.product.type.map((item) => item.type),
-      };
+      } as FavoritesProduct;
     });
   };
 

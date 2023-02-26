@@ -42,7 +42,7 @@
           :prepend-icon="item.icon"
           :title="item.title"
           :value="item.value"
-          @click="onClickModalLink(item.modal)"
+          @click="onClickModalLink(item.modal || 'menu')"
         />
       </template>
     </v-list>

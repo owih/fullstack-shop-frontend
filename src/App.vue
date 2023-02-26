@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import Default from '@/layouts/default';
+import Default from '@/layouts/default/index.vue';
 import CartModal from '@/components/Modal/CartModal/CartModal.vue';
 import FavoritesModal from '@/components/Modal/FavoritesModal/FavoritesModal.vue';
 import CustomLoader from '@/components/CustomLoader/CustomLoader.vue';

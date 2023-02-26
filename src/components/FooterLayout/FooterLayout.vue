@@ -4,7 +4,7 @@
       <div class="d-flex align-center ma-n2 order-md-1">
         <v-btn
           v-for="icon in socialMock"
-          :key="icon"
+          :key="icon.icon"
           class="pa-2 text-md-h6"
           :icon="icon.icon"
           :href="icon.url"
